@@ -40,7 +40,7 @@
     "execa": "^5.0.0",
     "fs-extra": "^10.0.0",
     "handlebars": "^4.7.7",
-    "html-minifier-terser": "^5.1.1",
+    "html-minifier-terser": "^6.1.0",
     "json-query": "^2.2.2",
     "json5": "^2.2.0",
     "listr": "^0.14.3",
