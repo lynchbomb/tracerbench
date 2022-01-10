@@ -7,9 +7,9 @@ import { resolve } from "path";
 import { describe } from "mocha";
 // import type { Report } from "@rehearsal/reporter";
 
-export const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
-export const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
-
+// export const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
+// export const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
+//
 import { TSC } from "../dist/src";
 
 const FIXTURE_APP_PATH = resolve(__dirname, "./fixtures/app");
