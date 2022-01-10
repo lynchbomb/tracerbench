@@ -4,33 +4,34 @@ import execa = require("execa");
 import { existsSync, readJSONSync, remove } from "fs-extra";
 import { join, resolve } from "path";
 import { setGracefulCleanup } from "tmp";
-
+import { describe } from "mocha";
 import type { Report } from "@rehearsal/reporter";
 
 export const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
 export const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
 
-import { TSC, git, getPathToBinary } from "../../src";
+import { TSC, git, getPathToBinary } from "../src";
 
-const FIXTURE_APP_PATH = resolve(__dirname, "../fixtures/app");
+const FIXTURE_APP_PATH = resolve(__dirname, "./fixtures/app");
 const RESULTS_FILEPATH = join(FIXTURE_APP_PATH, ".rehearsal.json");
 // we need an older version of typescript that'll flag errors
 let TSC_VERSION = "4.2.4";
+let CURRENT_TSC_VERSION = "";
 
 describe("ts:command against fixture", async () => {
-  const tscBinary = await getPathToBinary(YARN_PATH, "tsc");
-  const { stdout } = await execa(tscBinary, ["--version"]);
-  // stdout "Version N.N.N" split at the space
-  TSC_VERSION = stdout.split(" ")[1];
-
-  await execa(YARN_PATH, [
-    "add",
-    "-D",
-    `typescript@${TSC_VERSION}`,
-    "--ignore-scripts"
-  ]);
-
   test.stdout().it("WITH autofix", async (ctx) => {
+    const tscBinary = await getPathToBinary(YARN_PATH, "tsc");
+    const { stdout } = await execa(tscBinary, ["--version"]);
+    // stdout "Version N.N.N" split at the space
+    CURRENT_TSC_VERSION = stdout.split(" ")[1];
+
+    await execa(YARN_PATH, [
+      "add",
+      "-D",
+      `typescript@${TSC_VERSION}`,
+      "--ignore-scripts"
+    ]);
+
     await TSC.run([
       "--src_dir",
       FIXTURE_APP_PATH,
@@ -70,18 +71,19 @@ describe("ts:command against fixture", async () => {
     assert.equal(firstFileReportError.isAutofixed, true);
     assert.equal(firstFileReportError.stringLocation.end, 326);
     assert.equal(firstFileReportError.stringLocation.start, 236);
-  });
 
-  await remove(join(FIXTURE_APP_PATH, ".rehearsal.json"));
-  await git(
-    ["restore", "package.json", "../../yarn.lock", FIXTURE_APP_PATH],
-    process.cwd()
-  );
-  await execa(YARN_PATH, [
-    "add",
-    "-D",
-    `typescript@~${TSC_VERSION}`,
-    "--ignore-scripts"
-  ]);
-  setGracefulCleanup();
+    await git(
+      ["restore", "package.json", "../../yarn.lock", FIXTURE_APP_PATH],
+      process.cwd()
+    );
+    await remove(join(FIXTURE_APP_PATH, ".rehearsal.json"));
+
+    await execa(YARN_PATH, [
+      "add",
+      "-D",
+      `typescript@~${CURRENT_TSC_VERSION}`,
+      "--ignore-scripts"
+    ]);
+    setGracefulCleanup();
+  });
 });
