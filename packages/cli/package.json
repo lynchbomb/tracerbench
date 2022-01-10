@@ -119,7 +119,7 @@
     "lint": "yarn eslint -c .eslintrc.js --ext .ts .",
     "prepare": "yarn build",
     "prepack": "yarn build && yarn build:schema",
-    "test": "DEBUG=* yarn mocha",
+    "test": "yarn mocha",
     "oclif": "yarn oclif-dev manifest && yarn oclif-dev readme && yarn oclif:markdown",
     "oclif:markdown": "yarn oclif-dev readme --dir ./markdown --multi",
     "build": "yarn tsc -b && yarn oclif && yarn lint",
