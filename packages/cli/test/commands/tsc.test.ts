@@ -54,7 +54,7 @@ describe("ts:command against fixture", async () => {
     );
     const report: Report = readJSONSync(RESULTS_FILEPATH);
     const firstFileReportError = report.tscLog[0].errors[0];
-    assert.equal(report.projectName, "@rehearsal/cli");
+    assert.equal(report.projectName, "foo");
     assert.equal(report.fileCount, 3);
     assert.equal(report.cumulativeErrors, 21);
     assert.equal(report.uniqueCumulativeErrors, 1);
