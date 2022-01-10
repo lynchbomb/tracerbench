@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Archive, Entry, Header } from '@tracerbench/har';
 import { SessionConnection } from 'chrome-debugging-client';
 import Protocol from 'devtools-protocol';
@@ -153,7 +154,7 @@ export async function recordHARClient(
 
     await chrome.send('Page.close');
     debugCallback('Page.close');
-  } catch (e) {
+  } catch (e: any) {
     throw new Error(e);
   } finally {
     if (browser) {

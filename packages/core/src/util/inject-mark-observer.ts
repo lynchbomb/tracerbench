@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProtocolConnection } from 'chrome-debugging-client';
 import Protocol from 'devtools-protocol';
 import { RaceCancellation } from 'race-cancellation';
@@ -70,7 +71,7 @@ async function waitForMark(
       },
       raceCancelation
     );
-  } catch (original) {
+  } catch (original: any) {
     throw waitForMarkError(mark, { original });
   }
   const { exceptionDetails } = result;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Protocol } from 'devtools-protocol';
 
 import { createBrowser, getBrowserArgs, getTab, wait } from './utils';
@@ -113,7 +114,7 @@ export async function authClient(
     ]);
 
     await chrome.send('Page.close');
-  } catch (e) {
+  } catch (e: any) {
     throw new Error(e);
   } finally {
     if (browser) {
