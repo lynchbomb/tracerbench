@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { OutputFlags } from "@oclif/parser";
 import * as fs from "fs-extra";
 import * as JSON5 from "json5";
@@ -43,7 +44,7 @@ export function readConfig(fileOrDir = "tbconfig.json"): ITBConfig | undefined {
   try {
     [configDir, configFile] = resolveConfigFile(fileOrDir);
     config = JSON5.parse(fs.readFileSync(configFile, "utf8"));
-  } catch (e) {
+  } catch (e: any) {
     if (e.code === "ENOENT") {
       return;
     }

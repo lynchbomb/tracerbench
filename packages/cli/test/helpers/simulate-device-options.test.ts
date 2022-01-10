@@ -6,7 +6,7 @@ describe("simulate-device-options", () => {
     const device = "not-exist";
     try {
       getEmulateDeviceSettingForKeyAndOrientation(device);
-    } catch (error) {
+    } catch (error: any) {
       expect(error.message).to.equal(
         `Device emulation settings not found for device ${device}`
       );
