@@ -20,7 +20,7 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "bin": {
-    "tracerbench": "./bin/run"
+    "rehearsal": "./bin/run"
   },
   "dependencies": {
     "@oclif/command": "^1.8.0",
@@ -29,9 +29,6 @@
     "@oclif/parser": "^3.8.5",
     "@oclif/plugin-help": "^3.2.3",
     "@oclif/plugin-warn-if-update-available": "^1.7.0",
-    "@tracerbench/core": "^6.1.1",
-    "@tracerbench/stats": "^6.1.1",
-    "@tracerbench/trace-event": "^6.1.1",
     "archiver": "^5.3.0",
     "chalk": "^4.1.1",
     "chrome-debugging-client": "^2.0.0",
@@ -47,7 +44,20 @@
     "path": "0.12.7",
     "tmp": "^0.2.1",
     "tough-cookie": "^4.0.0",
-    "tslib": "^2.2.0"
+    "tslib": "^2.2.0",
+    "@rehearsal/plugin-ts-migrate": "^0.0.9",
+    "@rehearsal/reporter": "^0.0.9",
+    "@rehearsal/tsc-transforms": "^0.0.9",
+    "compare-versions": "^4.1.1",
+    "debug": "^4.3.2",
+    "find-up": "^5.0.0",
+    "listr2": "^3.13.4",
+    "semver": "^7.3.5",
+    "ts-migrate": "^0.1.26",
+    "ts-migrate-plugins": "^0.1.26",
+    "ts-migrate-server": "^0.1.26",
+    "which": "^2.0.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
@@ -79,14 +89,19 @@
     "prettier": "^2.2.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
-    "typescript-json-schema": "^0.50.0"
+    "typescript-json-schema": "^0.50.0",
+    "@microsoft/api-documenter": "^7.13.68",
+    "@microsoft/api-extractor": "^7.18.19",
+    "@types/debug": "^4.1.7",
+    "npm-run-all": "^4.1.5",
+    "pre-commit": "^1.2.2"
   },
   "engines": {
     "node": ">=10.0.0"
   },
   "oclif": {
     "commands": "./dist/src/commands",
-    "bin": "tracerbench",
+    "bin": "rehearsal",
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-warn-if-update-available"
@@ -109,10 +124,10 @@
     "lint": "eslint -c .eslintrc.js --ext .ts .",
     "prepare": "yarn build",
     "prepack": "yarn build && yarn build:schema",
-    "test": "yarn nyc mocha",
+    "test": "yarn lint && yarn nyc mocha",
     "oclif": "oclif-dev manifest && oclif-dev readme && yarn oclif:markdown",
     "oclif:markdown": "oclif-dev readme --dir ./markdown --multi",
-    "build": "rm -rf ./dist && yarn tsc -b && yarn copystatic && yarn oclif && yarn lint",
+    "build": "yarn tsc -b && yarn oclif && yarn lint",
     "build:schema": "typescript-json-schema \"src/command-config/tb-config.ts\" ITBConfig --out ./tb-schema.json",
     "copystatic": "cp -a ./src/static ./dist/src"
   }

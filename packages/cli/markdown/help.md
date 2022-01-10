@@ -1,17 +1,17 @@
-`tracerbench help`
-==================
+`rehearsal help`
+================
 
-display help for tracerbench
+display help for rehearsal
 
-* [`tracerbench help [COMMAND]`](#tracerbench-help-command)
+* [`rehearsal help [COMMAND]`](#rehearsal-help-command)
 
-## `tracerbench help [COMMAND]`
+## `rehearsal help [COMMAND]`
 
-display help for tracerbench
+display help for rehearsal
 
 ```
 USAGE
-  $ tracerbench help [COMMAND]
+  $ rehearsal help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -20,4 +20,4 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.5/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.3.1/src/commands/help.ts)_

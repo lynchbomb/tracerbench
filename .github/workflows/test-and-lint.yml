@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, 'lyncbbomb/*']
   pull_request:
-    branches: [master]
+    branches: [master, 'lynchbomb/*']
 
 jobs:
   test-and-lint:

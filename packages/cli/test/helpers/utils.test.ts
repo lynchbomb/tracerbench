@@ -1,76 +1,30 @@
+import { assert } from "chai";
+import { suite } from "mocha";
+
 import {
-  convertMSToMicroseconds,
-  mergeLeft,
-  parseMarkers,
-  secondsToTime
-} from "../../src/helpers/utils";
-import { expect } from "chai";
+  normalizeVersionString,
+} from "../../src/utils";
+import { eachCase } from "../test-helpers";
 
-const micro = convertMSToMicroseconds(`-100ms`);
 
-describe("utils", () => {
-  it(`convertMSToMicroseconds()`, () => {
-    expect(micro).to.equal(-100000);
-  });
-
-  it(`parseMarkers`, () => {
-    expect(parseMarkers("navigationStart,domComplete")).to.deep.equal([
+suite("normalizeVersionString", () => {
+  eachCase<typeof normalizeVersionString>(
+    [
       {
-        start: "navigationStart",
-        label: "domComplete"
+        args: ["foo-web_10.2.3"] as const,
+        expected: "10.2.3",
       },
       {
-        start: "domComplete",
-        label: "paint"
-      }
-    ]);
-  });
-});
-
-describe("mergeLeft", () => {
-  it(`Ensure merge left works as expected`, () => {
-    const destination = {
-      list: [1, 2, 3],
-      num: 1,
-      str: "string",
-      flag: false,
-      shouldStaySame: "same",
-      shouldBeNullAfter: "not null",
-      objectMerge: {
-        value: 0
-      }
-    };
-    const toMerge = {
-      list: [5],
-      num: 25,
-      str: "other",
-      flag: true,
-      shouldBeNullAfter: null,
-      objectMerge: {
-        value: 2,
-        newValue: 1
-      }
-    };
-    const result = mergeLeft(destination, toMerge);
-
-    expect(result.list).to.eql([5]);
-    expect(result.num).to.equal(25);
-    expect(result.str).to.equal("other");
-    expect(result.flag).to.equal(true);
-    expect(result.shouldBeNullAfter).to.equal(null);
-    expect(result.objectMerge).to.eql({
-      value: 2,
-      newValue: 1
-    });
-  });
-});
-
-describe("secondsToTime", () => {
-  it(`Ensure seconds to time works as expected`, () => {
-    const timeWithMin = secondsToTime(123);
-    const timeWithoutMin = secondsToTime(31);
-
-    expect(timeWithMin).to.eq("02m:03s");
-    expect(timeWithoutMin).to.eq("00m:31s");
-  });
+        args: ["foo-web_10.20.30"] as const,
+        expected: "10.20.30",
+      },
+      {
+        args: ["1.2.3"] as const,
+        expected: "1.2.3",
+      },
+    ],
+    (args, expected) => {
+      assert.deepEqual(normalizeVersionString(...args), expected);
+    }
+  );
 });
