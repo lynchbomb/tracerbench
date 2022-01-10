@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master, 'lyncbbomb/*']
+    branches: [master, 'lynchbomb/*']
   pull_request:
     branches: [master, 'lynchbomb/*']
 
@@ -17,4 +17,3 @@ jobs:
           node-version: 16
       - run: yarn install
       - run: yarn test
-      - run: yarn lint
