@@ -1,6 +1,6 @@
 import { test } from "@oclif/test";
 import { expect } from "chai";
-import execa = require("execa");
+// import execa = require("execa");
 // import { existsSync, readJSONSync, remove } from "fs-extra";
 import { resolve } from "path";
 // import { setGracefulCleanup } from "tmp";
@@ -10,7 +10,7 @@ import { describe } from "mocha";
 export const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
 export const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
 
-import { TSC, getPathToBinary } from "../src";
+import { TSC } from "../src";
 
 const FIXTURE_APP_PATH = resolve(__dirname, "./fixtures/app");
 // const RESULTS_FILEPATH = join(FIXTURE_APP_PATH, ".rehearsal.json");
@@ -19,17 +19,12 @@ let CURRENT_TSC_VERSION = "";
 
 describe("ts:command tsc version check", async () => {
   test.stdout().it(`on typescript version already tested`, async (ctx) => {
-    const tscBinary = await getPathToBinary(YARN_PATH, "tsc");
-    const { stdout } = await execa(tscBinary, ["--version"]);
-    // stdout "Version N.N.N" split at the space
-    CURRENT_TSC_VERSION = stdout.split(" ")[1];
-
     // this will test the version already installed
     await TSC.run([
       "--src_dir",
       FIXTURE_APP_PATH,
       "--tsc_version",
-      CURRENT_TSC_VERSION,
+      "4.5.4",
       "--dry_run",
       "--is_test"
     ]);
