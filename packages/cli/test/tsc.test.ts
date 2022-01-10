@@ -10,7 +10,7 @@ import { describe } from "mocha";
 // export const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
 // export const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
 //
-import { TSC } from "../dist/src";
+import CompileTest from "../src/commands/compile-test";
 
 const FIXTURE_APP_PATH = resolve(__dirname, "./fixtures/app");
 // const RESULTS_FILEPATH = join(FIXTURE_APP_PATH, ".rehearsal.json");
@@ -20,7 +20,7 @@ let CURRENT_TSC_VERSION = "";
 describe("ts:command tsc version check", async () => {
   test.stdout().it(`on typescript version already tested`, async (ctx) => {
     // this will test the version already installed
-    await TSC.run([
+    await CompileTest.run([
       "--src_dir",
       FIXTURE_APP_PATH,
       "--tsc_version",
