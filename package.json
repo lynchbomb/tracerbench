@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "lint": "lerna run lint --stream",
-    "prepare": "DEBUG=* lerna run prepare --stream",
+    "prepare": "lerna run prepare --stream",
     "test": "lerna run test --stream",
     "prepack": "lerna run prepack --stream",
     "changelog": "yarn conventional-changelog -i CHANGELOG.md -s"

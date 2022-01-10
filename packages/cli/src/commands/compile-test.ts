@@ -19,7 +19,7 @@ import {
 import {
   git,
   timestamp,
-  getPathToBinary,
+  // getPathToBinary,
   gitCommit,
   isRepoDirty,
 } from "../utils";
@@ -27,14 +27,14 @@ import {
 const DEBUG_CALLBACK = debug("rehearsal:ts");
 const DEFAULT_TS_BUILD = "beta";
 
-const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
-const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
-const NPM_PATH = resolve(VOLTA_HOME, "bin/npm");
+// const { VOLTA_HOME } = process.env as { VOLTA_HOME: string };
+// const YARN_PATH = resolve(VOLTA_HOME, "bin/yarn");
+// const NPM_PATH = resolve(VOLTA_HOME, "bin/npm");
 
-let TSC_PATH = "";
-let TS_MIGRATE_PATH = "";
+const TSC_PATH = "";
+const TS_MIGRATE_PATH = "";
 
-DEBUG_CALLBACK("paths %O", { VOLTA_HOME, YARN_PATH, NPM_PATH });
+// DEBUG_CALLBACK("paths %O", { VOLTA_HOME, YARN_PATH, NPM_PATH });
 
 // TODO remove cwd for development only
 const REPORTER = new Reporter({ cwd: process.cwd() });
@@ -79,8 +79,8 @@ export default class CompileTest extends Command {
       }
     }
 
-    TS_MIGRATE_PATH = await getPathToBinary(YARN_PATH, "ts-migrate");
-    TSC_PATH = await getPathToBinary(YARN_PATH, "tsc");
+    // TS_MIGRATE_PATH = await getPathToBinary(YARN_PATH, "ts-migrate");
+    // TSC_PATH = await getPathToBinary(YARN_PATH, "tsc");
 
     DEBUG_CALLBACK("TSC_PATH", TSC_PATH);
     DEBUG_CALLBACK("TS_MIGRATE_PATH", TS_MIGRATE_PATH);
@@ -107,13 +107,13 @@ export default class CompileTest extends Command {
                 exitOnError: true,
                 task: async (ctx, task) => {
                   if (!flags.tsc_version) {
-                    const { stdout } = await execa(NPM_PATH, [
-                      "show",
-                      `typescript@${build}`,
-                      "version",
-                    ]);
+                    // const { stdout } = await execa(NPM_PATH, [
+                    //   "show",
+                    //   `typescript@${build}`,
+                    //   "version",
+                    // ]);
 
-                    ctx.latestELRdBuild = stdout;
+                    ctx.latestELRdBuild = "4.5.4";
                     task.title = `Latest typescript@${build} version is ${ctx.latestELRdBuild}`;
                   } else {
                     ctx.latestELRdBuild = flags.tsc_version;
@@ -159,13 +159,13 @@ export default class CompileTest extends Command {
             task.newListr(() => [
               {
                 title: `Bumping TypeScript Dev-Dependency to typescript@${ctx.tsVersion}`,
-                task: async (ctx: Context) => {
-                  await execa(YARN_PATH, [
-                    "add",
-                    "-D",
-                    `typescript@${ctx.tsVersion}`,
-                    "--ignore-scripts",
-                  ]);
+                task: async () => {
+                  // await execa(YARN_PATH, [
+                  //   "add",
+                  //   "-D",
+                  //   `typescript@${ctx.tsVersion}`,
+                  //   "--ignore-scripts",
+                  // ]);
                 },
               },
               {
