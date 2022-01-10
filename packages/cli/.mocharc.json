@@ -6,11 +6,5 @@
   "forbid-only": true,
   "reporter": "spec",
   "timeout": 60000,
-  "file": ["test/setup.ts"],
-  "ignore": [
-    "test/fixtures/**/*",
-    "test/setup.ts",
-    "test/test-helpers.ts",
-    "test/ts-migrate/**/*"
-  ]
+  "ignore": ["test/fixtures/**/*"]
 }
